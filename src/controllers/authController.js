@@ -116,7 +116,7 @@ const login = async (req, res) => {
     return res.status(200).json({
       statusCode: 200,
       message: "OK",
-      data : text
+      text
     });
   } catch (e) {
     console.error(e)

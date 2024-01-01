@@ -65,8 +65,24 @@ const signUp = async (req, res) => {
     });
   }
 };
-
+const getAllUser = async (req, res) => {
+  try {
+    const users = await User.findAll();
+    return res.status(200).json({
+      statusCode: 200,
+      message: "OK",
+      data: users
+    });
+  } catch (e) {
+    console.error(e)
+    return res.status(500).json({
+      statusCode: 500,
+      error: e?.errors||e?.message
+    });
+  }
+};
 
 module.exports = {
   signUp,
+  getAllUser
 };
