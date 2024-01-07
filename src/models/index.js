@@ -36,6 +36,7 @@ db.sequelize = sequelize
 db.user = require('./user.js')(sequelize, DataTypes)
 db.expense = require('./expense.js')(sequelize, DataTypes)
 db.revenue = require('./revenue.js')(sequelize, DataTypes)
+db.admin = require('./admin.js')(sequelize, DataTypes)
 
 
 db.sequelize.sync({force: false})
@@ -51,6 +52,7 @@ db.user.hasMany(db.expense, {foreignKey: 'userId',onDelete: 'cascade', onUpdate:
 db.user.hasMany(db.revenue, {foreignKey: 'userId',onDelete: 'cascade', onUpdate: 'cascade'})
 db.expense.belongsTo(db.user, {foreignKey: 'userId',onDelete: 'cascade', onUpdate: 'cascade'})
 db.revenue.belongsTo(db.user, {foreignKey: 'userId',onDelete: 'cascade', onUpdate: 'cascade'})
+
 
 
 
