@@ -54,7 +54,11 @@ const getAllExpense = async (req, res) => {
     const expense = await Expense.findAll({
       where: {
         userId: userId
-      }
+      },
+      // thoi gian giam dan
+      order: [
+        ['time', 'DESC']
+      ]
     });
     if(expense.length === 0){
       return res.status(404).json({

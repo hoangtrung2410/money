@@ -53,7 +53,11 @@ const getAllRevenue = async (req, res) => {
     const revenue = await Revenue.findAll({
       where: {
         userId: userId
-      }
+      },
+      // thoi gian giam dan
+      order: [
+        ['time', 'DESC']
+      ]
     });
     if(revenue.length === 0){
       return res.status(404).json({
