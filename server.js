@@ -21,7 +21,6 @@ const userRouter = require('./src/routers/userRouter.js');
 const authRouter = require('./src/routers/authRouter.js');
 const revenueRouter = require('./src/routers/revenueRouter.js');
 const expenseRouter = require('./src/routers/expenseRouter.js');
-const statisticsRouter = require("./src/routers/statisticsRouter.js");
 const adminRouter = require("./src/routers/adminRouter.js");
 
 
@@ -31,7 +30,6 @@ app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/revenues', revenueRouter);
 app.use('/api/expenses', expenseRouter);
-app.use('/api/statistics', statisticsRouter);
 app.use('/api/admin', adminRouter);
 
 
