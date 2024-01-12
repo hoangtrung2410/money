@@ -14,16 +14,16 @@ const addExpenseSchema = () => {
 
 
 const addExpense = async (req, res) => {
-  try{
-    const userId = req.user.id;
-    console.log("userId = ", userId);
-    try {
-      await addExpenseSchema().validate(req.body, {abortEarly: false});
-    } catch (e) {
-      console.error(e)
-      return res.status(400).json({
-        statusCode: 400,
-        message: "Bad Request",
+          try{
+            const userId = req.user.id;
+            console.log("userId = ", userId);
+            try {
+              await addExpenseSchema().validate(req.body, {abortEarly: false});
+            } catch (e) {
+              console.error(e)
+              return res.status(400).json({
+                statusCode: 400,
+                message: "Bad Request",
         error: e.errors
       });
     }

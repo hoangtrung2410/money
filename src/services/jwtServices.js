@@ -43,34 +43,55 @@ const JwtService = {
     },
 
 
+    // jwtVerify: (token) => {
+    //     try {
+    //         if (process.env.SERVER_JWT !== "true")
+    //             new Error("[JWT] JWT flag is not setted");
+    //
+    //         return jwt.verify(
+    //             token,
+    //             process.env.SERVER_JWT_SECRET,
+    //             (err, decoded) => {
+    //                 blacklist.forEach((element) => {
+    //                     if (
+    //                         element.jti === decoded.jti &&
+    //                         element.iat === decoded.iat &&
+    //                         element.exp === decoded.exp
+    //                     )
+    //                         new err;
+    //                 });
+    //
+    //                 if (err != null) throw err;
+    //                 return decoded.payload;
+    //             }
+    //         );
+    //     } catch (error) {
+    //         console.log("[JWT] Error getting JWT token");
+    //         return error;
+    //     }
+    // },
     jwtVerify: (token) => {
         try {
             if (process.env.SERVER_JWT !== "true")
-                new Error("[JWT] JWT flag is not setted");
-
+                throw new Error("[JWT] JWT flag is not setted");
             return jwt.verify(
-                token,
-                process.env.SERVER_JWT_SECRET,
-                (err, decoded) => {
-                    blacklist.forEach((element) => {
-                        if (
-                            element.jti === decoded.jti &&
-                            element.iat === decoded.iat &&
-                            element.exp === decoded.exp
-                        )
-                            new err;
-                    });
+              token,
+              process.env.SERVER_JWT_SECRET,
+              (err, decoded) => {
+                  if (err) return res.status(401).json({
+                      success: false,
+                      mes: 'Invalid access token'
+                  })
+                  if (err != null) throw err;
+                  return decoded.payload;
+              }
+            )
 
-                    if (err != null) throw err;
-                    return decoded.payload;
-                }
-            );
-        } catch (error) {
-            console.log("[JWT] Error getting JWT token");
-            return error;
+        } catch (e) {
+            throw e;
+            console.log("[JWT] Error getting JWT token:", e.message)
         }
     },
-
     jwtBlacklistToken: (token) => {
         try {
             while (

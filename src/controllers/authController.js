@@ -128,7 +128,7 @@ const login = async (req, res) => {
 };
 const logout = async (req, res) => {
   try {
-    JwtService.jwtBlacklistToken(JwtService.jwtGetToken(req));
+    // JwtService.jwtBlacklistToken(JwtService.jwtGetToken(req));
     res.status(200).json({
       statusCode: 200,
       message: "Log out successfully",

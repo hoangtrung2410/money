@@ -70,37 +70,25 @@ const loginAdmins = async (req, res) => {
   }
 };
 
-const getAdminPassword = async (userName) => {
-  try {
-    const admin = await Admins.findOne({
-      where: {userName: userName},
-    });
-
-    return admin ? admin.passWord : null;
-  } catch (error) {
-    return res.status(404).json({error: "Admin not found"});
-  }
-};
-
 const updatePassword = async (req, res) => {
   try {
-    const userName = req.userName;
+    const id = req.admin.id;
+    console.log("11312312>>>> " +id);
     const {oldPassword, newPassword} = req.body;
-    const currentPassword = await getAdminPassword(userName);
-
-    if (oldPassword === currentPassword) {
-      const [updatedRowsCount, updatedPassword] = await Admins.update(
+    const admin = await Admins.findByPk(id);
+    if (admin.passWord !== oldPassword) {
+      res.status(401).json({error: "Mật khẩu cũ không đúng"});
+      return;
+    }
+    const [updatedRowsCount]= await Admins.update(
         {passWord: newPassword},
-        {where: {userName}, returning: true}
+        {where: {id: id}, returning: true}
       );
-      if (updatedRowsCount === 0) {
+    if (updatedRowsCount === 0) {
         res.status(404).json({error: "Cập nhật mật khẩu không thành công"});
         return;
-      }
-      res.status(200).json({message: "Thay đổi mật khẩu thành công"});
-    } else {
-      res.status(400).json({error: "Mật khẩu cũ không đúng"});
     }
+      res.status(200).json({message: "Thay đổi mật khẩu thành công"});
   } catch (error) {
     res.status(500).json({error: "Internal Server Error"});
   }
@@ -199,7 +187,7 @@ const deleteUser = async (req, res) => {
 };
 const logoutAdmins = async (req, res) => {
   try {
-    JwtService.jwtBlacklistToken(JwtService.jwtGetToken(req));
+    // JwtService.jwtBlacklistToken(JwtService.jwtGetToken(req));
     res.status(200).json({
       statusCode: 200,
       message: "Log out successfully",
