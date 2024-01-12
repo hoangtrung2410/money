@@ -182,7 +182,7 @@ const forgotPassword = async (req, res) => {
     console.log("user da luu ");
     const passwordCode = crypto.createHash('sha256').update(verificationCode.toString()).digest('hex');
     console.log("passwordCode:", passwordCode);
-    const html = `Chúc mừng bạn đến với GoodBody, đây là mã code của bạn: ${verificationCode}. Mã này sẽ hết hạn trong 15 phút.`;
+    const html = `Chúc mừng bạn đến với Money Love, đây là mã code của bạn: ${verificationCode}. Mã này sẽ hết hạn trong 15 phút.`;
     const text = {
       email,
       html
