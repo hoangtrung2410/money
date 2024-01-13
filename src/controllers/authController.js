@@ -166,11 +166,17 @@ const forgotPassword = async (req, res) => {
         [Op.or]: [
           {
             email: email,
-            status: true
           },
         ],
       },
     });
+    if(user.status === false){
+      return res.status(403).json({
+        statusCode: 403,
+        message: "Unauthorized",
+        error: 'User is blocked'
+      });
+    }
     if (!user) {
       return res.status(401).json({
         statusCode: 401,
